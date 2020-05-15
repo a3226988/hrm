@@ -36,4 +36,10 @@ public class EmployeeController {
         model.addAttribute("emp",employeeService.queryById(id));
         return "detail";
     }
+
+    @RequestMapping("search")
+    public String search(){
+        System.out.println("按条件搜索");
+        return "index";
+    }
 }
