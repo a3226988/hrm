@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.EmployeeDao">
+
+    <resultMap type="com.entity.Employee" id="EmployeeMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="deptId" column="dept_id" jdbcType="INTEGER"/>
+        <result property="jobId" column="job_id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="cardid" column="cardId" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="postcode" column="postCode" jdbcType="VARCHAR"/>
+        <result property="tel" column="tel" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="qqnum" column="qqNum" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="party" column="party" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="OTHER"/>
+        <result property="race" column="race" jdbcType="VARCHAR"/>
+        <result property="education" column="education" jdbcType="VARCHAR"/>
+        <result property="speciality" column="speciality" jdbcType="VARCHAR"/>
+        <result property="hobby" column="hobby" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="createdate" column="createDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="EmployeeMap">
+        select
+          id, dept_id, job_id, name, cardId, address, postCode, tel, phone, qqNum, email, sex, party, birthday, race, education, speciality, hobby, remark, createDate
+        from hrm_db.employee
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="EmployeeMap">
+        select
+          id, dept_id, job_id, name, cardId, address, postCode, tel, phone, qqNum, email, sex, party, birthday, race, education, speciality, hobby, remark, createDate
+        from hrm_db.employee
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="EmployeeMap">
+        select
+          id, dept_id, job_id, name, cardId, address, postCode, tel, phone, qqNum, email, sex, party, birthday, race, education, speciality, hobby, remark, createDate
+        from hrm_db.employee
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="deptId != null">
+                and dept_id = #{deptId}
+            </if>
+            <if test="jobId != null">
+                and job_id = #{jobId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="cardid != null and cardid != ''">
+                and cardId = #{cardid}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="postcode != null and postcode != ''">
+                and postCode = #{postcode}
+            </if>
+            <if test="tel != null and tel != ''">
+                and tel = #{tel}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="qqnum != null and qqnum != ''">
+                and qqNum = #{qqnum}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="party != null and party != ''">
+                and party = #{party}
+            </if>
+            <if test="birthday != null">
+                and birthday = #{birthday}
+            </if>
+            <if test="race != null and race != ''">
+                and race = #{race}
+            </if>
+            <if test="education != null and education != ''">
+                and education = #{education}
+            </if>
+            <if test="speciality != null and speciality != ''">
+                and speciality = #{speciality}
+            </if>
+            <if test="hobby != null and hobby != ''">
+                and hobby = #{hobby}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+            <if test="createdate != null">
+                and createDate = #{createdate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into hrm_db.employee(dept_id, job_id, name, cardId, address, postCode, tel, phone, qqNum, email, sex, party, birthday, race, education, speciality, hobby, remark, createDate)
+        values (#{deptId}, #{jobId}, #{name}, #{cardid}, #{address}, #{postcode}, #{tel}, #{phone}, #{qqnum}, #{email}, #{sex}, #{party}, #{birthday}, #{race}, #{education}, #{speciality}, #{hobby}, #{remark}, #{createdate})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update hrm_db.employee
+        <set>
+            <if test="deptId != null">
+                dept_id = #{deptId},
+            </if>
+            <if test="jobId != null">
+                job_id = #{jobId},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="cardid != null and cardid != ''">
+                cardId = #{cardid},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="postcode != null and postcode != ''">
+                postCode = #{postcode},
+            </if>
+            <if test="tel != null and tel != ''">
+                tel = #{tel},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="qqnum != null and qqnum != ''">
+                qqNum = #{qqnum},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="party != null and party != ''">
+                party = #{party},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="race != null and race != ''">
+                race = #{race},
+            </if>
+            <if test="education != null and education != ''">
+                education = #{education},
+            </if>
+            <if test="speciality != null and speciality != ''">
+                speciality = #{speciality},
+            </if>
+            <if test="hobby != null and hobby != ''">
+                hobby = #{hobby},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="createdate != null">
+                createDate = #{createdate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from hrm_db.employee where id = #{id}
+    </delete>
+
+</mapper>
