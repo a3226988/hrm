@@ -23,12 +23,25 @@
         <result property="hobby" column="hobby" jdbcType="VARCHAR"/>
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
         <result property="createdate" column="createDate" jdbcType="TIMESTAMP"/>
+        <association property="dept" javaType="com.entity.Dept">
+            <id column="dept_id" property="id"></id>
+            <result column="dname" property="name"></result>
+        </association>
+        <association property="job" javaType="com.entity.Job">
+            <id column="job_id" property="id"></id>
+            <result column="jname" property="name"></result>
+        </association>
     </resultMap>
+
+    <sql id="emp_column">
+         employee.id, dept_id, job_id, employee.name, cardId, address, postCode, tel, phone, qqNum, email, sex, party, birthday, race, education, speciality, hobby, employee.remark, createDate
+    </sql>
+
 
     <!--查询单个-->
     <select id="queryById" resultMap="EmployeeMap">
         select
-          id, dept_id, job_id, name, cardId, address, postCode, tel, phone, qqNum, email, sex, party, birthday, race, education, speciality, hobby, remark, createDate
+        <include refid="emp_column"></include>
         from hrm_db.employee
         where id = #{id}
     </select>
@@ -36,7 +49,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="EmployeeMap">
         select
-          id, dept_id, job_id, name, cardId, address, postCode, tel, phone, qqNum, email, sex, party, birthday, race, education, speciality, hobby, remark, createDate
+        <include refid="emp_column"></include>
         from hrm_db.employee
         limit #{offset}, #{limit}
     </select>
@@ -44,70 +57,12 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="EmployeeMap">
         select
-          id, dept_id, job_id, name, cardId, address, postCode, tel, phone, qqNum, email, sex, party, birthday, race, education, speciality, hobby, remark, createDate
-        from hrm_db.employee
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="deptId != null">
-                and dept_id = #{deptId}
-            </if>
-            <if test="jobId != null">
-                and job_id = #{jobId}
-            </if>
-            <if test="name != null and name != ''">
-                and name = #{name}
-            </if>
-            <if test="cardid != null and cardid != ''">
-                and cardId = #{cardid}
-            </if>
-            <if test="address != null and address != ''">
-                and address = #{address}
-            </if>
-            <if test="postcode != null and postcode != ''">
-                and postCode = #{postcode}
-            </if>
-            <if test="tel != null and tel != ''">
-                and tel = #{tel}
-            </if>
-            <if test="phone != null and phone != ''">
-                and phone = #{phone}
-            </if>
-            <if test="qqnum != null and qqnum != ''">
-                and qqNum = #{qqnum}
-            </if>
-            <if test="email != null and email != ''">
-                and email = #{email}
-            </if>
-            <if test="sex != null">
-                and sex = #{sex}
-            </if>
-            <if test="party != null and party != ''">
-                and party = #{party}
-            </if>
-            <if test="birthday != null">
-                and birthday = #{birthday}
-            </if>
-            <if test="race != null and race != ''">
-                and race = #{race}
-            </if>
-            <if test="education != null and education != ''">
-                and education = #{education}
-            </if>
-            <if test="speciality != null and speciality != ''">
-                and speciality = #{speciality}
-            </if>
-            <if test="hobby != null and hobby != ''">
-                and hobby = #{hobby}
-            </if>
-            <if test="remark != null and remark != ''">
-                and remark = #{remark}
-            </if>
-            <if test="createdate != null">
-                and createDate = #{createdate}
-            </if>
-        </where>
+        <include refid="emp_column"></include>
+        ,dept.name as dname
+        ,job.name as jname
+        from employee
+        inner join dept on employee.dept_id = dept.id
+        inner join job on employee.job_id = job.id
     </select>
 
     <!--新增所有列-->

@@ -1,7 +1,7 @@
 package com.controller;
 
 import com.entity.Employee;
-import com.entity.Person;
+import com.github.pagehelper.PageInfo;
 import com.service.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,8 +26,11 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @RequestMapping(value = {"list"})
-    public String list(Model model){
-        model.addAttribute("emplist",employeeService.queryAll());
+    public String list(Model model,@RequestParam(required = false,defaultValue = "1") Integer pageNum,
+                       @RequestParam(required = false,defaultValue = "5")Integer pageSize){
+        PageInfo<Employee> pageInfo = new PageInfo<>(employeeService.queryAll(pageNum,pageSize));
+
+        model.addAttribute("pageInfo",pageInfo);
         return "index";
     }
 

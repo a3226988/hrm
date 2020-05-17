@@ -33,7 +33,7 @@ public interface EmployeeService {
      *
      * @return 对象列表
      */
-    List<Employee> queryAll();
+    List<Employee> queryAll(int pageNum,int pageSize);
 
     /**
      * 新增数据

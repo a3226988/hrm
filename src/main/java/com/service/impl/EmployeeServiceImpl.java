@@ -2,6 +2,7 @@ package com.service.impl;
 
 import com.entity.Employee;
 import com.dao.EmployeeDao;
+import com.github.pagehelper.PageHelper;
 import com.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +44,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> queryAll() {
+    public List<Employee> queryAll(int pageNum,int pageSize) {
+        //使用分页插件，开启分页，那么下一行查询方法会自动添加分页的关键字实现分页查询
+        PageHelper.startPage(pageNum,pageSize);
         return employeeDao.queryAll(new Employee());
     }
 
