@@ -1,3 +1,4 @@
 /target/
 .idea
 hrm_project.iml
+/src/test

@@ -63,6 +63,20 @@
         from employee
         inner join dept on employee.dept_id = dept.id
         inner join job on employee.job_id = job.id
+        <where>
+            <if test="jobId!=null">
+                and job_id = #{jobId}
+            </if>
+            <if test="deptId!=null">
+                and dept_id = #{deptId}
+            </if>
+            <if test="sex!=null">
+                and sex = #{sex}
+            </if>
+            <if test="name!=null">
+                and employee.name like concat('%',#{name},'%')
+            </if>
+        </where>
     </select>
 
     <!--新增所有列-->

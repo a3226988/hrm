@@ -1,12 +1,17 @@
 package com.service.impl;
 
+import com.commons.BaseServiceImpl;
+import com.dao.NoticeDao;
 import com.entity.Employee;
 import com.dao.EmployeeDao;
 import com.github.pagehelper.PageHelper;
 import com.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,73 +20,55 @@ import java.util.List;
  * @author makejava
  * @since 2020-05-14 15:57:03
  */
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Service("employeeService")
 public class EmployeeServiceImpl implements EmployeeService {
-    @Resource
-    private EmployeeDao employeeDao;
-
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-    @Override
-    public Employee queryById(Integer id) {
-        return this.employeeDao.queryById(id);
-    }
-
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
-    @Override
-    public List<Employee> queryAllByLimit(int offset, int limit) {
-        return this.employeeDao.queryAllByLimit(offset, limit);
-    }
+    //需要给父类BaseServiceImpl的basedao赋值
+    @Autowired
+    EmployeeDao employeeDao;
 
     @Override
-    public List<Employee> queryAll(int pageNum,int pageSize) {
-        //使用分页插件，开启分页，那么下一行查询方法会自动添加分页的关键字实现分页查询
+    public List<Employee> queryAll(int pageNum, int pageSize, Employee employee) {
         PageHelper.startPage(pageNum,pageSize);
-        return employeeDao.queryAll(new Employee());
+        return employeeDao.queryAll(employee);
     }
 
-    /**
-     * 新增数据
-     *
-     * @param employee 实例对象
-     * @return 实例对象
-     */
     @Override
-    public Employee insert(Employee employee) {
-        this.employeeDao.insert(employee);
-        return employee;
+    @Transactional
+    public boolean batchDelet(Integer[] ids) throws Exception {
+        int deleteCount = 0;
+        for(Integer id:ids){
+            int num = employeeDao.deleteById(id);
+            deleteCount+=num;
+        }
+        if(deleteCount<ids.length){
+            throw new Exception("删除失败！");
+        }
+        return true;
     }
 
-    /**
-     * 修改数据
-     *
-     * @param employee 实例对象
-     * @return 实例对象
-     */
     @Override
-    public Employee update(Employee employee) {
-        this.employeeDao.update(employee);
-        return this.queryById(employee.getId());
+    public Employee queryById(Serializable id) {
+        return employeeDao.queryById(id);
     }
 
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
     @Override
-    public boolean deleteById(Integer id) {
-        return this.employeeDao.deleteById(id) > 0;
+    public List<Employee> queryAll(Employee employee) {
+        return employeeDao.queryAll(employee);
+    }
+
+    @Override
+    public boolean insert(Employee employee) {
+        return false;
+    }
+
+    @Override
+    public boolean update(Employee employee) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteById(Serializable id) {
+        return false;
     }
 }
