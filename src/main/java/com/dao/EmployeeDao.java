@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface EmployeeDao extends BaseDao<Employee> {
     //自由添加子接口特有的方法
+
+    List<Employee> selectAll();
 }

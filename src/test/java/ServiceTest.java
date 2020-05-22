@@ -1,5 +1,7 @@
 import com.dao.DeptDao;
+import com.dao.EmployeeDao;
 import com.dao.NoticeDao;
+import com.dao.UserDao;
 import com.entity.Dept;
 import com.entity.Employee;
 import com.entity.Notice;
@@ -21,6 +23,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext-bean.xml","classpath:applicationContext-datasource.xml"})
 public class ServiceTest {
+
+    @Autowired
+    UserDao userDao;
+
+    @Test
+    public void testUserDao(){
+        System.out.println(userDao.queryByUsername("zhangsan"));
+        System.out.println(userDao.queryPermsNamesByUsername("zhangsan"));
+        System.out.println(userDao.queryRoleNamesByUsername("zhangsan"));
+    }
 
     @Autowired
     EmployeeService employeeService;
@@ -69,6 +81,17 @@ public class ServiceTest {
         });*/
         noticeService.queryAll(new Notice()).forEach(notice -> {
             System.out.println(notice);
+        });
+    }
+
+
+    @Autowired
+    EmployeeDao employeeDao;
+
+    @Test
+    public void testLazyLoad(){
+        employeeDao.selectAll().forEach(employee -> {
+            System.out.println(employee.getName()+"-"+employee.getDept().getName());
         });
     }
 }

@@ -5,4 +5,8 @@
     <select id="getNames" resultType="String">
         select name from dept
     </select>
+
+    <select id="selectById" resultType="com.entity.Dept">
+        select * from dept where id = #{id}
+    </select>
 </mapper>

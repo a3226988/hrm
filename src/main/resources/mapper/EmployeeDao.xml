@@ -33,6 +33,16 @@
         </association>
     </resultMap>
 
+
+    <resultMap id="empmap" type="com.entity.Employee" autoMapping="true" >
+        <association property="dept" javaType="com.entity.Dept" fetchType="lazy"  column="dept_id" select="com.dao.DeptDao.selectById">
+        </association>
+    </resultMap>
+
+    <select id="selectAll" resultMap="empmap">
+        select * from employee
+    </select>
+
     <sql id="emp_column">
          employee.id, dept_id, job_id, employee.name, cardId, address, postCode, tel, phone, qqNum, email, sex, party, birthday, race, education, speciality, hobby, employee.remark, createDate
     </sql>

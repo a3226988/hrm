@@ -143,7 +143,7 @@
                                         <a href="">修改密码</a>
                                     </li>
                                     <li>
-                                        <a href="">退出</a>
+                                        <a href="/logout">退出</a>
                                     </li>
                                 </ul>
                             </li>

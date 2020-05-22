@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.service.DeptService;
 import com.service.EmployeeService;
 import com.service.JobService;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,8 +26,9 @@ import java.util.List;
  * @since 2020-05-14 15:57:03
  */
 /*@RestController*/
-    @Controller
+@Controller
 @RequestMapping("employee")
+@RequiresRoles("personnel")
 public class EmployeeController {
     /**
      * 服务对象
