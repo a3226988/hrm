@@ -42,7 +42,6 @@ public class MyReaml extends AuthorizingRealm {
         //token就是收集到的用户的信息
         //1、根据用户提交的用户名，查看用户名是否存在
         String username = token.getPrincipal().toString();
-        System.out.println("用户名："+username);
         //2、查询数据库，确认用户名是否存在
         User user = userDao.queryByUsername(username);
         if(user==null){

@@ -1,5 +1,7 @@
 package com.commons;
 
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.stereotype.Component;
@@ -8,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 
 /**
  * Create by gc on 2020/5/21
@@ -17,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 public class MyException implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-
         ex.printStackTrace();
         ModelAndView mv = new ModelAndView();
         if(ex instanceof UnauthorizedException){
