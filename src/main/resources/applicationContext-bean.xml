@@ -7,4 +7,7 @@
 
     <!--扫描注解-->
     <content:component-scan base-package="com.service,com.aop"></content:component-scan>
+
+    <!--aop注解启用-->
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 </beans>

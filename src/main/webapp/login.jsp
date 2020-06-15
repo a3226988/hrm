@@ -12,7 +12,8 @@
 </head>
 <body>
 <h1>登录页</h1>
-<form action="login" method="post">
+<!--/表示的是tomcat的根目录-->
+<form action="<%=request.getContextPath()%>/login" method="post">
     <input name="username" value="zhangsan"/>
     <input name="password" type="password" value="123"/>
     <input type="checkbox" name="remeberme"/>
